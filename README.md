@@ -61,67 +61,6 @@ Assets/
 └── Settings/                 # Configuraciones del proyecto
 ```
 
-## 🎯 Scripts Principales
-
-### GameManager.cs
-Gestiona el estado global del juego:
-- Control de vidas y puntuación
-- Gestión de checkpoints
-- Sistema de respawn
-- Invulnerabilidad temporal
-- Temporizador del juego
-
-### PlayerController.cs
-Controla el movimiento y acciones del jugador:
-- Movimiento con WASD/Flechas
-- Detección de suelo para saltos
-- Recolección de estrellas
-- Detección de colisiones con enemigos
-
-### Checkpoint.cs
-Sistema de puntos de control:
-- Activación automática al contacto
-- Efectos visuales (cambio de color)
-- Comunicación con GameManager
-- Prevención de reactivación
-
-### ZonaPeligrosa.cs
-Zonas que afectan al jugador:
-- Zonas mortales (caídas)
-- Zonas peligrosas (lava, espinas)
-- Respeto a invulnerabilidad temporal
-
-## 🎨 Configuración en Unity
-
-### GameManager
-1. Asignar el Transform del jugador en "Jugador"
-2. Configurar TextMeshPro para UI:
-   - Texto Puntos
-   - Texto Tiempo  
-   - Texto Vidas
-3. Ajustar vidas iniciales y tiempo de invulnerabilidad
-
-### Checkpoints
-1. Crear GameObject con:
-   - Collider2D (Is Trigger = true)
-   - SpriteRenderer
-   - Script Checkpoint
-2. Configurar colores y efectos visuales
-3. Asignar tag "Checkpoint" (opcional)
-
-### Zonas Peligrosas
-1. Crear GameObject con:
-   - Collider2D (Is Trigger = true)
-   - Script ZonaPeligrosa
-2. Configurar si es mortal o peligrosa
-
-## 🏷️ Tags Necesarios
-
-- `Player` - Para el jugador
-- `Enemigo` - Para los enemigos
-- `Estrella` - Para los recolectables
-- `Checkpoint` - Para los checkpoints (opcional)
-
 ## 🎮 Mecánicas de Juego
 
 ### Puntuación
@@ -143,30 +82,6 @@ Zonas que afectan al jugador:
 - **Efecto Visual**: Parpadeo del jugador
 - **Protección**: Inmunidad temporal a enemigos
 
-## 🔧 Desarrollo
-
-### Para Desarrolladores
-El juego está estructurado con patrones de diseño claros:
-- **Singleton**: GameManager para acceso global
-- **Component Pattern**: Scripts especializados por funcionalidad
-- **Observer Pattern**: Comunicación entre sistemas
-
-### Extensibilidad
-- Fácil agregar nuevos tipos de enemigos
-- Sistema de checkpoints escalable
-- UI modular y configurable
-
-## 🐛 Solución de Problemas
-
-### Problemas Comunes
-1. **Jugador no respawnea**: Verificar que el GameManager tenga la referencia del jugador
-2. **Checkpoints no funcionan**: Asegurar que tengan Collider2D como Trigger
-3. **UI no se actualiza**: Verificar asignación de TextMeshPro en GameManager
-
-### Debug
-- Activar logs en la consola de Unity
-- Verificar tags de GameObjects
-- Comprobar configuración de Physics2D
 
 ## 📝 Créditos
 

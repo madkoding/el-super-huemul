@@ -9,6 +9,7 @@ TagManager:
   - Estrella
   - Plataforma
   - Wall
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

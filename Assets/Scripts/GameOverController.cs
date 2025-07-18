@@ -3,94 +3,104 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using ElSuperHuemul;
 
-public class GameOverController : MonoBehaviour
+namespace ElSuperHuemul.Game
 {
-	[Header("UI")]
-	public TextMeshProUGUI textoPuntuacionFinal;
-	public TextMeshProUGUI textoMejorPuntuacion;
-	public TextMeshProUGUI textoNuevoRecord;
-	public Button botonReiniciar;
-	public Button botonMenu;
-
-	void Start()
+	public class GameOverController : MonoBehaviour
 	{
-		// Configurar botones
-		if (botonReiniciar != null)
-		{
-			botonReiniciar.onClick.AddListener(ReiniciarJuego);
-		}
+		[Header("UI")]
+		public TextMeshProUGUI textoPuntuacionFinal;
+		public TextMeshProUGUI textoMejorPuntuacion;
+		public TextMeshProUGUI textoNuevoRecord;
+		public Button botonReiniciar;
+		public Button botonMenu;
 
-		if (botonMenu != null)
+		void Start()
 		{
-			botonMenu.onClick.AddListener(VolverAlMenu);
-		}
-
-		// Mostrar puntuaciones
-		MostrarPuntuaciones();
-	}
-
-	void Update()
-	{
-		// Controles de teclado (New Input System)
-		Keyboard keyboard = Keyboard.current;
-		if (keyboard != null)
-		{
-			if (keyboard.rKey.wasPressedThisFrame)
+			// Configurar botones
+			if (botonReiniciar != null)
 			{
-				ReiniciarJuego();
+				botonReiniciar.onClick.AddListener(ReiniciarJuego);
 			}
 
-			if (keyboard.escapeKey.wasPressedThisFrame || keyboard.mKey.wasPressedThisFrame)
+			if (botonMenu != null)
 			{
-				VolverAlMenu();
+				botonMenu.onClick.AddListener(VolverAlMenu);
+			}
+
+			// Reproducir música de Game Over
+			if (AudioManager.Instance != null)
+			{
+				AudioManager.Instance.ReproducirMusicaGameOver();
+			}
+
+			// Mostrar puntuaciones
+			MostrarPuntuaciones();
+		}
+
+		public static void Update()
+		{
+			// Controles de teclado (New Input System)
+			Keyboard keyboard = Keyboard.current;
+			if (keyboard != null)
+			{
+				if (keyboard.rKey.wasPressedThisFrame)
+				{
+					ReiniciarJuego();
+				}
+
+				if (keyboard.escapeKey.wasPressedThisFrame || keyboard.mKey.wasPressedThisFrame)
+				{
+					VolverAlMenu();
+				}
 			}
 		}
-	}
 
-	void MostrarPuntuaciones()
-	{
-		int ultimaPuntuacion = PlayerPrefs.GetInt("UltimaPuntuacion", 0);
-		int mejorPuntuacion = PlayerPrefs.GetInt("MejorPuntuacion", 0);
-
-		// Verificar si es un nuevo récord
-		bool nuevoRecord = false;
-		if (ultimaPuntuacion > mejorPuntuacion)
+		void MostrarPuntuaciones()
 		{
-			mejorPuntuacion = ultimaPuntuacion;
-			PlayerPrefs.SetInt("MejorPuntuacion", mejorPuntuacion);
-			PlayerPrefs.Save();
-			nuevoRecord = true;
-		}
+			int ultimaPuntuacion = PlayerPrefs.GetInt("UltimaPuntuacion", 0);
+			int mejorPuntuacion = PlayerPrefs.GetInt("MejorPuntuacion", 0);
 
-		// Actualizar UI
-		if (textoPuntuacionFinal != null)
-		{
-			textoPuntuacionFinal.text = "Puntuación Final: " + ultimaPuntuacion;
-		}
-
-		if (textoMejorPuntuacion != null)
-		{
-			textoMejorPuntuacion.text = "Mejor Puntuación: " + mejorPuntuacion;
-		}
-
-		if (textoNuevoRecord != null)
-		{
-			textoNuevoRecord.gameObject.SetActive(nuevoRecord);
-			if (nuevoRecord)
+			// Verificar si es un nuevo récord
+			bool nuevoRecord = false;
+			if (ultimaPuntuacion > mejorPuntuacion)
 			{
-				textoNuevoRecord.text = "¡NUEVO RÉCORD!";
+				mejorPuntuacion = ultimaPuntuacion;
+				PlayerPrefs.SetInt("MejorPuntuacion", mejorPuntuacion);
+				PlayerPrefs.Save();
+				nuevoRecord = true;
+			}
+
+			// Actualizar UI
+			if (textoPuntuacionFinal != null)
+			{
+				textoPuntuacionFinal.text = "Puntuación Final: " + ultimaPuntuacion;
+			}
+
+			if (textoMejorPuntuacion != null)
+			{
+				textoMejorPuntuacion.text = "Mejor Puntuación: " + mejorPuntuacion;
+			}
+
+			if (textoNuevoRecord != null)
+			{
+				textoNuevoRecord.gameObject.SetActive(nuevoRecord);
+				if (nuevoRecord)
+				{
+					textoNuevoRecord.text = "¡NUEVO RÉCORD!";
+				}
 			}
 		}
-	}
 
-	public void ReiniciarJuego()
-	{
-		SceneManager.LoadScene("Juego");
-	}
+		public static void ReiniciarJuego()
+		{
+			SceneManager.LoadScene("Juego");
+		}
 
-	public void VolverAlMenu()
-	{
-		SceneManager.LoadScene("Inicio");
+		public static void VolverAlMenu()
+		{
+			SceneManager.LoadScene("Inicio");
+		}
 	}
 }

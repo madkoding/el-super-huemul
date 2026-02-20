@@ -95,4 +95,4 @@ Desarrollado con Unity 2022.3 LTS
 ¡Disfruta jugando El Super Huemul! 🦌✨
 
 <!-- AUTO-UPDATE-DATE -->
-**Última actualización:** 2026-02-19 22:35:44 -03
+**Última actualización:** 2026-02-20 00:00:33 -03
